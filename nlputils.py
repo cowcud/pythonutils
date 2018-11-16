@@ -1,8 +1,7 @@
 import re
 
-## tokenization (if you are using different language, you would need to tokenize differently)
 def tokenize_text(text,lang='en',nltk=None):
-    """Converts all elements of list to lower case.
+    """Tries to extract tokens from given text for given language.
 
     Parameters
     ----------
@@ -33,14 +32,38 @@ def tokenize_text(text,lang='en',nltk=None):
         # For other languages, for now nothing special
         return list(text)
 
-def get_unique_tokens_in_sentences(sents,lang="en",nltk=None):
+def tokenize_text_blocks(text_blocks,lang='en',nltk=None):
+    """Tries to extract tokens from given text blocks for given language and return
+    corresponding blocks of tokens.
+
+    Parameters
+    ----------
+
+    text_blocks:       list of strings
+        Text blocks to tokenize.
+
+    lang:       string, optional
+        ISO language code e.g. 'en'.
+
+    nltk:       module reference, optional
+        If prefer to use nltk module, reference for module.
+
+    Returns
+    ----------
+
+    list of strings (tokens identified in text)
+    """
+    token_blocks = [tokenize_text(t,lang,nltk) for t in text_blocks]
+    return token_blocks
+        
+def get_unique_tokens_in_text_blocks(text_blocks,lang="en",nltk=None):
     """Get unique tokens in input sentences.
 
     Parameters
     ----------
 
-    sents:       list of strings
-        Sentences to process.
+    text_blocks:       list of strings
+        Text_blocks to process.
 
     lang:       string, optional
         ISO language code e.g. 'en'.
@@ -51,7 +74,7 @@ def get_unique_tokens_in_sentences(sents,lang="en",nltk=None):
     Returns
     ----------
 
-    list of strings (unique tokens identified in sentences)
+    list of strings (unique tokens identified in text blocks)
     """
-    sent_tokens = [tokenize_text(s,lang) for s in sents]
-    return list(set([t for l in sent_tokens for t in l]))
+    token_blocks = tokenize_text_blocks(text_blocks)
+    return list(set([t for l in token_blocks for t in l]))
