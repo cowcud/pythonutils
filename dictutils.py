@@ -42,3 +42,20 @@ def dict_to_keys_values_arrays(dict,np=None):
         "keys": kv[:,0],
         "values": kv[:,1]
     }
+    
+def swap_dict_keys_values(dict):
+    """Converts dict {k:v} into dict {v:k} i.e. reverses keys and values.
+
+    Parameters
+    ----------
+
+    dict:       dictionary
+        dict to convert {k:v}.
+
+    Returns
+    ----------
+
+    dictionary {v:k}
+    """
+    flip_dict = {v:k for k,v in dict.items()}
+    return flip_dict
